@@ -34,8 +34,7 @@ app.MapControllerRoute(
     pattern: "{controller}/{action}/",
     new { controller = "Home", action = "Index" });
 app.MapControllerRoute(
-    name: "shop_grid",
+    name: "create",
     pattern: "{controller}/{action}/",
-    new { controller = "Category", action = "ShopGrid" });
-
+    new { controller = "Categories", action = "Edit" });
 app.Run();
