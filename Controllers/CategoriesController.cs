@@ -14,9 +14,11 @@ namespace WebApp.Controllers
     public class CategoriesController : Controller
     {
         private readonly CategoryContext _context;
+        private readonly ILogger<CategoriesController> _logger;
 
-        public CategoriesController(CategoryContext context)
+        public CategoriesController(CategoryContext context, ILogger<CategoriesController> logger)
         {
+            _logger = logger;
             _context = context;
         }
 
@@ -45,8 +47,10 @@ namespace WebApp.Controllers
         }
 
         // GET: Categories/Create
+        [HttpGet]
         public IActionResult Create()
         {
+            _logger.LogInformation("huesos");
             return View();
         }
 
@@ -57,6 +61,7 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Title,Description")] Category category)
         {
+            _logger.LogInformation("huesos");
             if (ModelState.IsValid)
             {
                 _context.Add(category);
