@@ -29,8 +29,11 @@ namespace WebApp.Controllers
         }
 
         // GET: Category/Details/5
+        [Route("category/detail/{id?}", Name = "category_detail")]
         public async Task<IActionResult> Details(int? id)
         {
+            _logger.LogInformation($"sfkljsdf Id: {id}");
+            Console.WriteLine($"sfkljsdf Id: {id}");
             if (id == null)
             {
                 return NotFound();

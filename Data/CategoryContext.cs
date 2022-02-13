@@ -47,5 +47,13 @@ namespace WebApp.Data
                 .HasConstraintName("FK_Products_Categories");
 
         }
+
+        public async Task<List<Category>> GetCategories()
+        {
+            List<Category> categories = await Categories.ToListAsync();
+            if (categories.Count > 0)
+                return categories;
+            return new List<Category>();
+        }
     }
 }

@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System.Web.Mvc;
 using WebApp.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -25,16 +27,11 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+
 app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller}/{action}/",
-    new { controller = "Home", action = "Index" });
-app.MapControllerRoute(
-    name: "create",
-    pattern: "{controller}/{action}/",
-    new { controller = "Categories", action = "Edit" });
+app.MapControllerRoute(pattern: "/", defaults: new { controller = "home", action = "index" }, name: "default");
+
 app.Run();

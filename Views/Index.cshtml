@@ -1,6 +1,8 @@
+@using WebApp.Models
 @{
     Layout = "~/Views/Layouts/_Layout.cshtml";
 }
+@model dynamic
 
 
 <section class="hero">
@@ -13,17 +15,11 @@
                         <span>All departments</span>
                     </div>
                     <ul>
-                        <li><a href="#">Fresh Meat</a></li>
-                        <li><a href="#">Vegetables</a></li>
-                        <li><a href="#">Fruit & Nut Gifts</a></li>
-                        <li><a href="#">Fresh Berries</a></li>
-                        <li><a href="#">Ocean Foods</a></li>
-                        <li><a href="#">Butter & Eggs</a></li>
-                        <li><a href="#">Fastfood</a></li>
-                        <li><a href="#">Fresh Onion</a></li>
-                        <li><a href="#">Papayaya & Crisps</a></li>
-                        <li><a href="#">Oatmeal</a></li>
-                        <li><a href="#">Fresh Bananas</a></li>
+                        @foreach (Category category in Model.Categories)
+                        {
+                            @*new {id = category.Id}*@
+                            <li>@Html.RouteLink(category.Title, "category_detail", new {id=category.Id})</li>
+                        }
                     </ul>
                 </div>
             </div>
@@ -517,4 +513,5 @@
     </div>
 </section>
 
-@section Scripts {}
+@section Scripts {
+}
