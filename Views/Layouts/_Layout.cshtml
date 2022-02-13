@@ -20,13 +20,10 @@
     <link rel="stylesheet" href="~/css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="~/css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="~/css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="~/css/style.css" type="text/css">
-</head>
+    <link rel="stylesheet" href="~/css/style.css" type="text/css"></head>
 <body>
-    <!-- Page Preloder -->
     <div id="preloder">
-        <div class="loader"></div>
-    </div>
+        <div class="loader"></div></div>
     <div class="humberger__menu__overlay"></div>
     <div class="humberger__menu__wrapper">
         <div class="humberger__menu__logo">
@@ -84,8 +81,7 @@
                 <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
                 <li>Free Shipping for all Order of $99</li>
             </ul>
-        </div>
-    </div>
+        </div></div>
     <header class="header">
         <div class="header__top">
             <div class="container">
@@ -133,8 +129,8 @@
                 <div class="col-lg-6">
                     <nav class="header__menu">
                         <ul>
-                            <li @(@ViewBag.RequestPath == "/" ? "class=active" : null)><a href="/">Home</a></li>
-                            <li @(@ViewBag.RequestPath == "/Category/ShopGrid/" ? "class=active" : null)><a href="/Category/ShopGrid/">Shop</a></li>
+                            <li @(@ViewBag.RequestPath == "/" ? "class=active" : null)>@Html.RouteLink("Home", "default")</li>
+                            <li @(@ViewBag.RequestPath == "/catalog/" ? "class=active" : null)>@Html.RouteLink("Shop", "catalog")</li>
                             <li>
                                 <a href="#">Pages</a>
                                 <ul class="header__menu__dropdown">
@@ -162,8 +158,7 @@
             <div class="humberger__open">
                 <i class="fa fa-bars"></i>
             </div>
-        </div>
-    </header>
+        </div></header>
     @RenderBody()
     <footer class="footer spad">
         <div class="container">

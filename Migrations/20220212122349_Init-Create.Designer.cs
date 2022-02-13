@@ -10,7 +10,7 @@ using WebApp.Data;
 
 namespace WebApp.Migrations
 {
-    [DbContext(typeof(CategoryContext))]
+    [DbContext(typeof(CatalogContext))]
     [Migration("20220212122349_Init-Create")]
     partial class InitCreate
     {

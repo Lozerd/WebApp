@@ -10,23 +10,18 @@ namespace WebApp.Controllers
     public class HomeController : BaseController
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly CategoryContext _categoryContext;
+        
 
-        public HomeController(ILogger<HomeController> logger, CategoryContext categoryContext)
+        public HomeController(ILogger<HomeController> logger, CatalogContext categoryContext) : base(categoryContext)
         {
             _logger = logger;
-            _categoryContext = categoryContext;
         }
 
         async public Task<IActionResult> Index()
         {
-            setCommonViewBag(HttpContext);
-            dynamic model = new ExpandoObject();
-            if (_categoryContext != null)
-            {
-                model.Categories = await _categoryContext.GetCategories();
-            }
-            return View(viewName: "~/Views/Index.cshtml", model: model);
+            string template_name = "~/Views/Home/Index.cshtml";
+            SetCommonContext(HttpContext);
+            return View(template_name, Model);
         }
 
 

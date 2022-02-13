@@ -8,9 +8,9 @@ using WebApp.Models;
 
 namespace WebApp.Data
 {
-    public class CategoryContext : DbContext
+    public class CatalogContext : DbContext
     {
-        public CategoryContext(DbContextOptions<CategoryContext> options)
+        public CatalogContext(DbContextOptions<CatalogContext> options)
             : base(options)
         {
         }
@@ -48,12 +48,20 @@ namespace WebApp.Data
 
         }
 
-        public async Task<List<Category>> GetCategories()
+        internal List<Product> GetCategoryRelatedProducts(int category_id = 0)
         {
-            List<Category> categories = await Categories.ToListAsync();
-            if (categories.Count > 0)
-                return categories;
-            return new List<Category>();
+            List<Product> products = Products.Where(p => p.CategoryId == category_id).ToList();
+            if (products.Count == 0)
+                return null;
+            return products;
+        }
+
+        public List<Category> GetCategories()
+        {
+            List<Category> categories = Categories.ToList();
+            if (categories.Count == 0)
+                return null;
+            return categories;
         }
     }
 }

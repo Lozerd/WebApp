@@ -11,36 +11,37 @@ using WebApp.Models;
 
 namespace WebApp.Controllers
 {
-    public class CategoryController : Controller
+    public class CategoryController : BaseController
     {
-        private readonly CategoryContext _context;
         private readonly ILogger<CategoryController> _logger;
 
-        public CategoryController(CategoryContext context, ILogger<CategoryController> logger)
+        public CategoryController(CatalogContext catalogContext, ILogger<CategoryController> logger) : base(catalogContext)
         {
             _logger = logger;
-            _context = context;
         }
 
-        // GET: Category
-        public async Task<IActionResult> Index()
+        [HttpGet]
+        [Route("catalog/{category_id?}/", Name = "catalog")]
+        //public async Task<IActionResult> Index(int? category_id)
+        public IActionResult Index(int? category_id)
         {
-            return View(await _context.Categories.ToListAsync());
+            string template_name = "~/Views/Category/Catalog.cshtml";
+            SetCommonContext(HttpContext);
+            Model.Category = CatalogContext.Categories.FirstOrDefault(c => c.Id == category_id);
+            Model.Products = CatalogContext.Products.Where(p => p.CategoryId == category_id).ToList();//GetCategoryRelatedProducts(Model.Category.Id);
+            return View(template_name, Model);
         }
-
-        // GET: Category/Details/5
-        [Route("category/detail/{id?}", Name = "category_detail")]
+        
+        [HttpGet]
+        [Route("category/detail/{id?}/", Name = "category_detail")]
         public async Task<IActionResult> Details(int? id)
         {
-            _logger.LogInformation($"sfkljsdf Id: {id}");
-            Console.WriteLine($"sfkljsdf Id: {id}");
             if (id == null)
             {
                 return NotFound();
             }
 
-            var category = await _context.Categories
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var category = await CatalogContext.Categories.FirstOrDefaultAsync(m => m.Id == id);
             if (category == null)
             {
                 return NotFound();
@@ -66,8 +67,8 @@ namespace WebApp.Controllers
             _logger.LogInformation("create POST");
             if (ModelState.IsValid)
             {
-                _context.Add(category);
-                await _context.SaveChangesAsync();
+                CatalogContext.Add(category);
+                await CatalogContext.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(category);
@@ -81,7 +82,7 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Categories.FindAsync(id);
+            var category = await CatalogContext.Categories.FindAsync(id);
             if (category == null)
             {
                 return NotFound();
@@ -105,8 +106,8 @@ namespace WebApp.Controllers
             {
                 try
                 {
-                    _context.Update(category);
-                    await _context.SaveChangesAsync();
+                    CatalogContext.Update(category);
+                    await CatalogContext.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -132,7 +133,7 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Categories
+            var category = await CatalogContext.Categories
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (category == null)
             {
@@ -147,15 +148,15 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var category = await _context.Categories.FindAsync(id);
-            _context.Categories.Remove(category);
-            await _context.SaveChangesAsync();
+            var category = await CatalogContext.Categories.FindAsync(id);
+            CatalogContext.Categories.Remove(category);
+            await CatalogContext.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool CategoryExists(int id)
         {
-            return _context.Categories.Any(e => e.Id == id);
+            return CatalogContext.Categories.Any(e => e.Id == id);
         }
     }
 }

@@ -10,7 +10,7 @@ using WebApp.Data;
 
 namespace WebApp.Migrations
 {
-    [DbContext(typeof(CategoryContext))]
+    [DbContext(typeof(CatalogContext))]
     [Migration("20220213193606_add-field_is_featured")]
     partial class addfield_is_featured
     {

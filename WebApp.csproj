@@ -8,6 +8,8 @@
 
   <ItemGroup>
     <Content Remove="Views\blog.cshtml" />
+    <Content Remove="Views\Category\catalog.cshtml" />
+    <Content Remove="Views\Contacts.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,6 +35,8 @@
 
   <ItemGroup>
     <None Include="Views\blog.cshtml" />
+    <None Include="Views\Category\Catalog.cshtml" />
+    <None Include="Views\Home\Contacts.cshtml" />
   </ItemGroup>
 
 </Project>

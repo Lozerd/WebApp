@@ -10,7 +10,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
 string connectionString = builder.Configuration.GetConnectionString("CategoryContext");
-builder.Services.AddDbContext<CategoryContext>(options =>
+builder.Services.AddDbContext<CatalogContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 var app = builder.Build();
