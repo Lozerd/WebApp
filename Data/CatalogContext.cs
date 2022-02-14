@@ -52,16 +52,8 @@ namespace WebApp.Data
         {
             List<Product> products = Products.Where(p => p.CategoryId == category_id).ToList();
             if (products.Count == 0)
-                return null;
+                return Products.ToList();
             return products;
-        }
-
-        public List<Category> GetCategories()
-        {
-            List<Category> categories = Categories.ToList();
-            if (categories.Count == 0)
-                return null;
-            return categories;
         }
     }
 }

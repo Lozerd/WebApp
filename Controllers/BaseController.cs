@@ -14,7 +14,7 @@ namespace WebApp.Controllers
             CatalogContext = catalogContext;
         }
 
-        public async void SetCommonContext(HttpContext request)
+        public void SetCommonContext(HttpContext request)
         {
             if (request is null)
             {
@@ -32,7 +32,7 @@ namespace WebApp.Controllers
 
         private void SetCommonModels()
         {
-            Model.Categories = CatalogContext.GetCategories();
+            Model.Categories = CatalogContext.Categories.ToList();
         }
     }
 }

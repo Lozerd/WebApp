@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApp.Data;
 
@@ -10,9 +11,10 @@ using WebApp.Data;
 namespace WebApp.Migrations
 {
     [DbContext(typeof(CatalogContext))]
-    partial class CategoryContextModelSnapshot : ModelSnapshot
+    [Migration("20220214134922_change_product_price")]
+    partial class change_product_price
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,21 +54,17 @@ namespace WebApp.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<float>("DiscountValue")
-                        .HasColumnType("float");
-
                     b.Property<bool>("IsSale")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<float>("Price")
-                        .HasColumnType("float");
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
 
                     b.Property<string>("ProductDescription")
                         .HasColumnType("text");
 
                     b.Property<string>("ProductName")
                         .IsRequired()
-                        .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
 
                     b.HasKey("ProductId")

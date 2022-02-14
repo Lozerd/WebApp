@@ -11,43 +11,47 @@ using WebApp.Models;
 
 namespace WebApp.Controllers
 {
-    public class CategoryController : BaseController
+    public class CatalogController : BaseController
     {
-        private readonly ILogger<CategoryController> _logger;
+        private readonly ILogger<CatalogController> _logger;
 
-        public CategoryController(CatalogContext catalogContext, ILogger<CategoryController> logger) : base(catalogContext)
+        public CatalogController(CatalogContext catalogContext, ILogger<CatalogController> logger) : base(catalogContext)
         {
             _logger = logger;
         }
 
-        [HttpGet]
-        [Route("catalog/{category_id?}/", Name = "catalog")]
+        [Route("catalog", Name = "catalog")]
         //public async Task<IActionResult> Index(int? category_id)
-        public IActionResult Index(int? category_id)
+        public async Task<IActionResult> Catalog()
         {
+            List<Product> products = await CatalogContext.Products.ToListAsync();
             string template_name = "~/Views/Category/Catalog.cshtml";
             SetCommonContext(HttpContext);
-            Model.Category = CatalogContext.Categories.FirstOrDefault(c => c.Id == category_id);
-            Model.Products = CatalogContext.Products.Where(p => p.CategoryId == category_id).ToList();//GetCategoryRelatedProducts(Model.Category.Id);
+            Model.Categories = await CatalogContext.Categories.ToListAsync();
+            Model.Products = products;
             return View(template_name, Model);
         }
         
-        [HttpGet]
-        [Route("category/detail/{id?}/", Name = "category_detail")]
-        public async Task<IActionResult> Details(int? id)
+        [Route("catalog/{category_id}", Name = "catalog_detail")]
+        public async Task<IActionResult> CatalogDetail([FromQuery]int? category_id)
         {
-            if (id == null)
+            string template_name = "~/Views/Category/Catalog.cshtml";
+            
+            if (category_id == null)
             {
                 return NotFound();
             }
 
-            var category = await CatalogContext.Categories.FirstOrDefaultAsync(m => m.Id == id);
+            Category category = await CatalogContext.Categories.FirstOrDefaultAsync(c => c.Id == category_id);
+            
             if (category == null)
             {
                 return NotFound();
             }
-
-            return View(category);
+            SetCommonContext(HttpContext);
+            Model.Category = category;
+            Model.Products = CatalogContext.GetCategoryRelatedProducts(category_id ?? 0);
+            return View(template_name, Model);
         }
 
         // GET: Category/Create

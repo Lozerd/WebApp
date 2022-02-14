@@ -17,7 +17,7 @@
                     @if (((IDictionary<String, object>)Model).ContainsKey("Categories"))
                     {
                         <ul>
-                            @foreach (var category in Model.Categories)
+                            @foreach (var category in (Model.Categories))
                             {
                                 <li>@Html.RouteLink($"{category.Title}", "category_detail", new {id=category.Id})</li>
                             }
